@@ -3,19 +3,51 @@ title: "data_import"
 output: html_document
 ---
 
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(tidyverse)
+library(janitor)
+library(skimr)
 ```
 
+## Import FAS data
 
-##Import FAS csv files
+Import my first csv
 
-Import my first csv.
 ```{r}
-litters_data = read_csv(file = "./data/FAS_litters.csv")
-litters_data = janitor::clean_names(litters_data)
+litter_data <- read_csv(file = './data/FAS_litters.csv')
+litter_data <- janitor::clean_names(litter_data)
 ```
 
+Import pups
+
+```{r}
+pups_data <- read_csv(file='./data/FAS_pups.csv')
+```
+
+## Look at litters data
+
+```{r}
+head(litter_data)
+tail(litter_data)
+
+skimr::skim(litter_data)
+
+litter_data = read_csv(file = "./data/FAS_litters.csv",
+  skip = 10, col_names = FALSE)
+```
+
+## NFL data
+```{r}
+nfl_data <- readxl::read_excel(path='./data/mlb11.xlsx')
+
+nfl_sub <- readxl::read_excel(path = './data/mlb11.xlsx', range = 'A1:E17')
+```
+
+Pulse SAS Data
+```{r}
+pulse_data <- haven::read_sas('./data/public_pulse_data.sas7bdat')
+```
 
